@@ -788,7 +788,7 @@ function Index() {
                 loading="lazy"
                 className="h-56 w-full object-cover"
               />
-              <figcaption className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/85 via-primary/20 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              <figcaption className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/85 via-primary/20 to-transparent p-3 opacity-100 transition-opacity duration-500 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
                 <span className="font-display text-[0.6rem] tracking-[0.16em] text-primary-foreground uppercase">
                   {tag}
                 </span>
