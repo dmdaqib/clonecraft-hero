@@ -164,3 +164,74 @@
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
+
+/* Image blended into the page background (soft feathered edges) */
+@utility blend-image {
+  mask-image: radial-gradient(
+    ellipse 72% 68% at 50% 45%,
+    #000 45%,
+    rgba(0, 0, 0, 0.55) 68%,
+    transparent 92%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 72% 68% at 50% 45%,
+    #000 45%,
+    rgba(0, 0, 0, 0.55) 68%,
+    transparent 92%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Card / media hover treatment used across services + gallery */
+@utility media-hover {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.5s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-soft);
+  }
+  & img {
+    transition:
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      filter 0.5s ease;
+  }
+  &:hover img {
+    transform: scale(1.08);
+    filter: contrast(1.08) brightness(1.03);
+  }
+}
+
+@keyframes float-pop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.08);
+  }
+}
+
+@utility auto-pop {
+  animation: float-pop 2.6s ease-in-out infinite;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 34s linear infinite;
+  &:hover {
+    animation-play-state: paused;
+  }
+}
