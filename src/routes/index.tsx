@@ -30,7 +30,7 @@ import gallery4 from "@/assets/gallery-4.jpg";
 import gallery5 from "@/assets/gallery-5.jpg";
 import gallery6 from "@/assets/gallery-6.jpg";
 import ctaMachine from "@/assets/cta-machine.jpg";
-import artistPortrait from "@/assets/artist-portrait.jpg";
+import artistPhoto from "@/assets/artist-photo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -329,7 +329,7 @@ function Index() {
               alt="Black and grey realism statue tattoo on an upper arm"
               width={1024}
               height={1536}
-              className="blend-image relative mx-auto max-h-[600px] w-full object-cover"
+              className="blend-image relative mx-auto max-h-[600px] w-full -scale-x-100 object-cover"
             />
           </div>
         </div>
