@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   CalendarDays,
@@ -282,7 +282,9 @@ function OfferModal({ onClose }: { onClose: () => void }) {
         'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
       );
       if (!nodes || nodes.length === 0) return;
-      const list = Array.from(nodes).filter((n) => n.offsetParent !== null);
+      const list: HTMLElement[] = Array.from(nodes).filter(
+        (n) => n.offsetParent !== null,
+      );
       if (list.length === 0) return;
       const first = list[0];
       const last = list[list.length - 1];
