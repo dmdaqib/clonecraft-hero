@@ -173,11 +173,71 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   );
 }
 
+const socials = [
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://instagram.com",
+    style: { background: "var(--gradient-instagram)" },
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    href: "https://wa.me/917770012345",
+    style: { background: "var(--brand-whatsapp)" },
+  },
+  {
+    icon: Phone,
+    label: "Call Us",
+    href: "tel:+917770012345",
+    style: { background: "var(--brand-call)" },
+  },
+];
+
+function SocialDock() {
+  const [docked, setDocked] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setDocked(window.scrollY > 420);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div
+      className={`fixed z-50 flex transition-all duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${
+        docked
+          ? "bottom-6 left-1/2 -translate-x-1/2 translate-y-0 flex-row gap-4 rounded-full border border-border bg-card/90 px-5 py-3 shadow-[var(--shadow-soft)] backdrop-blur"
+          : "top-1/2 right-5 -translate-y-1/2 flex-col gap-5 rounded-full border border-transparent px-2 py-2"
+      }`}
+    >
+      {socials.map(({ icon: Icon, label, href, style }, i) => (
+        <a
+          key={label}
+          href={href}
+          target={href.startsWith("http") ? "_blank" : undefined}
+          rel="noreferrer"
+          aria-label={label}
+          className="group auto-pop relative flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground shadow-[var(--shadow-card)] transition-transform duration-300 hover:scale-125"
+          style={{ ...style, animationDelay: `${i * 0.35}s` }}
+        >
+          <Icon className="h-5 w-5" strokeWidth={1.8} />
+          <span
+            className={`pointer-events-none absolute font-display text-[0.6rem] tracking-[0.14em] uppercase whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
+              docked ? "-top-7" : "right-14"
+            }`}
+          >
+            {label}
+          </span>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function Index() {
   const [filter, setFilter] = useState("All");
-  const [page, setPage] = useState(0);
-  const pages = Math.ceil(reviews.length / 3);
-  const visibleReviews = reviews.slice(page * 3, page * 3 + 3);
   const visibleGallery =
     filter === "All" ? gallery : gallery.filter((g) => g.tag === filter);
 
