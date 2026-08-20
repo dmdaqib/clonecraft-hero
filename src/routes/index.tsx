@@ -693,16 +693,6 @@ function Index() {
                   loading="lazy"
                   className="w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
-                <div className="pointer-events-none absolute right-4 bottom-4 z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full border border-amber-600/60 bg-black/70 text-center backdrop-blur transition-transform duration-500 group-hover:scale-110 sm:right-6 sm:bottom-6 sm:h-24 sm:w-24">
-                  <span className="font-display text-xl font-bold text-amber-500 sm:text-2xl">
-                    15+
-                  </span>
-                  <span className="text-[0.5rem] tracking-[0.2em] text-amber-200/80 uppercase">
-                    Years
-                    <br />
-                    Of Craft
-                  </span>
-                </div>
               </div>
             </div>
           </div>
