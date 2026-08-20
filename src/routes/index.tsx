@@ -1,24 +1,552 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Diamond,
+  Instagram,
+  Mail,
+  MapPin,
+  MessageCircle,
+  PenTool,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Users,
+  Youtube,
+} from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import heroArm from "@/assets/hero-arm.jpg";
+import styleRealism from "@/assets/style-realism.jpg";
+import styleGeometric from "@/assets/style-geometric.jpg";
+import stylePortrait from "@/assets/style-portrait.jpg";
+import styleTraditional from "@/assets/style-traditional.jpg";
+import styleMinimalist from "@/assets/style-minimalist.jpg";
+import styleBlackGrey from "@/assets/style-blackgrey.jpg";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import gallery5 from "@/assets/gallery-5.jpg";
+import gallery6 from "@/assets/gallery-6.jpg";
+import ctaMachine from "@/assets/cta-machine.jpg";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Kryptonix Tattoo Studio | Custom Tattoos in Bangalore" },
+      {
+        name: "description",
+        content:
+          "Art you wear, for life. Custom tattoo designs, premium hygiene and 5+ years of artistry at Kryptonix Tattoo Studio, Bangalore.",
+      },
+      { property: "og:title", content: "Kryptonix Tattoo Studio | Art You Wear" },
+      {
+        property: "og:description",
+        content:
+          "Custom tattoos, premium hygiene and unmatched artistry. Book a free consultation.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const navLinks = [
+  "Home",
+  "About Us",
+  "Services",
+  "Gallery",
+  "Reviews",
+  "FAQ",
+  "Contact",
+];
+
+const features = [
+  { icon: PenTool, title: "Custom Designs", text: "Personalized just for you" },
+  { icon: ShieldCheck, title: "Safe & Hygienic", text: "100% sterile & safe" },
+  { icon: Diamond, title: "Premium Quality", text: "Top inks & equipment" },
+];
+
+const stats = [
+  { icon: Users, value: "1000+", label: "Happy Clients" },
+  { icon: Sparkles, value: "1500+", label: "Tattoos Completed" },
+  { icon: ShieldCheck, value: "5+", label: "Years Experience" },
+  { icon: Star, value: "4.9/5", label: "Google Rating" },
+];
+
+const styles = [
+  { img: styleRealism, name: "Realism", text: "Detailed. Realistic. Timeless." },
+  { img: styleGeometric, name: "Geometric", text: "Symmetry. Patterns. Perfection." },
+  { img: stylePortrait, name: "Portrait", text: "Faces. Memories. Forever." },
+  { img: styleTraditional, name: "Traditional", text: "Bold Lines. Classic Vibes." },
+  { img: styleMinimalist, name: "Minimalist", text: "Simple. Elegant. Meaningful." },
+  { img: styleBlackGrey, name: "Black & Grey", text: "Shades. Depth. Emotion." },
+];
+
+const galleryFilters = [
+  "All",
+  "Realism",
+  "Minimalist",
+  "Black & Grey",
+  "Geometric",
+  "Traditional",
+];
+
+const gallery = [
+  { img: gallery1, tag: "Black & Grey", alt: "Floral back tattoo" },
+  { img: gallery2, tag: "Geometric", alt: "Compass and clock tattoo" },
+  { img: gallery3, tag: "Realism", alt: "Goddess portrait tattoo" },
+  { img: gallery4, tag: "Realism", alt: "Crowned lion tattoo" },
+  { img: gallery5, tag: "Black & Grey", alt: "Warrior sleeve tattoo" },
+  { img: gallery6, tag: "Minimalist", alt: "Fine line mountain tattoo" },
+];
+
+const reviews = [
+  {
+    quote:
+      "Absolutely amazing experience! The artist understood my idea perfectly and the outcome was beyond my expectations.",
+    name: "Rohan S.",
+  },
+  {
+    quote:
+      "Super professional and the hygiene standards are top-notch. Highly recommended Kryptonix!",
+    name: "Anjali M.",
+  },
+  {
+    quote:
+      "Best tattoo studio in town! The detailing and finishing is just perfect. Will definitely come back for more.",
+    name: "Vikram D.",
+  },
+  {
+    quote:
+      "Loved the whole process, from sketch to final ink. They took their time to get every line right.",
+    name: "Neha K.",
+  },
+  {
+    quote:
+      "Clean studio, friendly artists and a design that I get compliments on every single day.",
+    name: "Arjun P.",
+  },
+  {
+    quote:
+      "They turned a rough idea on my phone into the best piece of art I own. Worth every rupee.",
+    name: "Sana R.",
+  },
+];
+
+function Logo({ className = "" }: { className?: string }) {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className={`flex items-center gap-2 ${className}`}>
+      <span className="font-display text-3xl font-extrabold leading-none tracking-tighter">
+        K
+      </span>
+      <span className="leading-none">
+        <span className="block font-display text-lg font-bold tracking-wide">
+          KRYPTONIX
+        </span>
+        <span className="block text-[0.6rem] tracking-[0.3em] text-muted-foreground">
+          TATTOO STUDIO
+        </span>
+      </span>
     </div>
+  );
+}
+
+function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
+  return (
+    <div className="text-center">
+      <p className="eyebrow">{eyebrow}</p>
+      <h2 className="mt-2 text-2xl font-semibold tracking-wide uppercase sm:text-3xl">
+        {title}
+      </h2>
+      <div className="mt-3 flex items-center justify-center gap-2 text-muted-foreground">
+        <span className="h-px w-8 bg-border" />
+        <PenTool className="h-3.5 w-3.5" />
+        <span className="h-px w-8 bg-border" />
+      </div>
+    </div>
+  );
+}
+
+function Index() {
+  const [filter, setFilter] = useState("All");
+  const [page, setPage] = useState(0);
+  const pages = Math.ceil(reviews.length / 3);
+  const visibleReviews = reviews.slice(page * 3, page * 3 + 3);
+  const visibleGallery =
+    filter === "All" ? gallery : gallery.filter((g) => g.tag === filter);
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      {/* Nav */}
+      <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
+          <Logo />
+          <nav className="hidden items-center gap-7 text-sm lg:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link}
+              </a>
+            ))}
+          </nav>
+          <div className="flex items-center gap-4">
+            <a
+              href="tel:+917770012345"
+              className="hidden items-center gap-2 text-sm font-medium sm:flex"
+            >
+              <Phone className="h-4 w-4" />
+              +91 77700 12345
+            </a>
+            <a
+              href="#book"
+              className="rounded-sm bg-primary px-5 py-3 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+            >
+              Book Consultation
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-12 lg:grid-cols-2 lg:py-16">
+          <div>
+            <div className="flex items-center gap-3">
+              <PenTool className="h-4 w-4 -rotate-45" />
+              <p className="eyebrow">Ink Your Story</p>
+            </div>
+            <h1 className="mt-5 font-display text-5xl leading-[0.95] font-medium tracking-tight uppercase sm:text-6xl lg:text-7xl">
+              Art you wear.
+              <span className="mt-1 block font-extrabold">For life.</span>
+            </h1>
+            <p className="mt-6 max-w-md text-muted-foreground">
+              Custom tattoos. Premium hygiene. Unmatched artistry.
+              <br />
+              We turn your ideas into timeless ink.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#book"
+                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+              >
+                Book Consultation <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#gallery"
+                className="inline-flex items-center gap-3 rounded-sm border border-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:bg-accent"
+              >
+                Explore Work
+              </a>
+            </div>
+
+            <div className="mt-12 grid gap-6 sm:grid-cols-3">
+              {features.map(({ icon: Icon, title, text }) => (
+                <div key={title} className="flex items-start gap-3">
+                  <Icon className="mt-0.5 h-6 w-6" strokeWidth={1.4} />
+                  <div>
+                    <p className="font-display text-sm font-semibold">{title}</p>
+                    <p className="text-xs text-muted-foreground">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative">
+            <span className="pointer-events-none absolute -top-10 left-0 font-display text-[12rem] leading-none font-extrabold text-accent select-none">
+              1
+            </span>
+            <img
+              src={heroArm}
+              alt="Black and grey realism statue tattoo on an upper arm"
+              width={1024}
+              height={1536}
+              className="relative mx-auto max-h-[600px] w-full rounded-sm object-cover"
+            />
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 flex-col items-center gap-6 border-l border-border pl-4 lg:flex">
+          {[
+            { icon: Instagram, label: "Instagram" },
+            { icon: MessageCircle, label: "WhatsApp" },
+            { icon: Phone, label: "Call Us" },
+          ].map(({ icon: Icon, label }) => (
+            <div key={label} className="text-center">
+              <Icon className="mx-auto h-5 w-5" strokeWidth={1.4} />
+              <p className="mt-1 text-[0.6rem] text-muted-foreground">{label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* About + stats */}
+      <section className="mx-auto max-w-7xl px-5 pb-16">
+        <div className="grid gap-8 rounded-sm border border-border bg-card p-8 shadow-[var(--shadow-card)] lg:grid-cols-[1fr_2.4fr]">
+          <div className="lg:border-r lg:border-border lg:pr-8">
+            <p className="eyebrow">About Us</p>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+              Kryptonix Tattoo Studio is where creativity meets precision. Our
+              artists specialise in custom designs that reflect your story and
+              style.
+            </p>
+            <p className="mt-5 font-script text-2xl">Kryptonix Team</p>
+          </div>
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+            {stats.map(({ icon: Icon, value, label }) => (
+              <div key={label} className="text-center">
+                <Icon className="mx-auto h-7 w-7" strokeWidth={1.3} />
+                <p className="mt-4 font-display text-3xl font-semibold">{value}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="mx-auto max-w-7xl px-5 pb-16">
+        <SectionHeading eyebrow="Our Services" title="Tattoo Styles We Specialize In" />
+        <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+          {styles.map(({ img, name, text }) => (
+            <article
+              key={name}
+              className="group overflow-hidden rounded-sm border border-border bg-card shadow-[var(--shadow-card)]"
+            >
+              <img
+                src={img}
+                alt={`${name} tattoo example`}
+                width={640}
+                height={768}
+                loading="lazy"
+                className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="px-3 py-4 text-center">
+                <h3 className="font-display text-xs font-semibold tracking-[0.12em] uppercase">
+                  {name}
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                  {text}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <a
+            href="#book"
+            className="inline-flex rounded-sm bg-primary px-7 py-3.5 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+          >
+            View All Services
+          </a>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section id="gallery" className="mx-auto max-w-7xl px-5 pb-16">
+        <SectionHeading eyebrow="Our Work" title="Tattoo Gallery" />
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {galleryFilters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-sm px-4 py-2 text-xs font-medium transition-colors ${
+                filter === f
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+          {visibleGallery.map(({ img, alt }) => (
+            <img
+              key={alt}
+              src={img}
+              alt={alt}
+              width={640}
+              height={768}
+              loading="lazy"
+              className="h-56 w-full rounded-sm object-cover transition-transform duration-500 hover:scale-[1.03]"
+            />
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <a
+            href="#book"
+            className="inline-flex items-center gap-3 rounded-sm border border-primary px-7 py-3.5 font-display text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:bg-accent"
+          >
+            View Full Gallery <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      </section>
+
+      {/* Reviews */}
+      <section className="mx-auto max-w-7xl px-5 pb-16">
+        <SectionHeading eyebrow="Client Love" title="What Our Clients Say" />
+        <div className="relative mt-8">
+          <div className="grid gap-5 px-0 md:grid-cols-3 lg:px-12">
+            {visibleReviews.map(({ quote, name }) => (
+              <figure
+                key={name}
+                className="rounded-sm border border-border bg-card p-6 shadow-[var(--shadow-card)]"
+              >
+                <div className="flex gap-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  “{quote}”
+                </blockquote>
+                <figcaption className="mt-5 font-display text-sm font-semibold">
+                  — {name}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <button
+            aria-label="Previous reviews"
+            onClick={() => setPage((p) => (p - 1 + pages) % pages)}
+            className="absolute top-1/2 left-0 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card lg:flex"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            aria-label="Next reviews"
+            onClick={() => setPage((p) => (p + 1) % pages)}
+            className="absolute top-1/2 right-0 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card lg:flex"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="mt-6 flex justify-center gap-2">
+          {Array.from({ length: pages }).map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Reviews page ${i + 1}`}
+              onClick={() => setPage(i)}
+              className={`h-2 w-2 rounded-full transition-colors ${
+                page === i ? "bg-primary" : "bg-border"
+              }`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section id="book" className="mx-auto max-w-7xl px-5 pb-16">
+        <div className="grid overflow-hidden rounded-sm border border-border bg-card shadow-[var(--shadow-soft)] lg:grid-cols-[0.35fr_1fr]">
+          <img
+            src={ctaMachine}
+            alt="Tattoo artist holding a tattoo machine"
+            width={768}
+            height={640}
+            loading="lazy"
+            className="h-full max-h-56 w-full object-cover"
+          />
+          <div className="flex flex-wrap items-center justify-between gap-6 p-8">
+            <div>
+              <p className="eyebrow">Ready To Get Inked?</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-wide uppercase">
+                Book Your Consultation
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Let's bring your vision to life. Schedule your free consultation
+                today!
+              </p>
+            </div>
+            <div className="flex flex-col items-start gap-3">
+              <a
+                href="tel:+917770012345"
+                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+              >
+                Book Now <ArrowRight className="h-4 w-4" />
+              </a>
+              <p className="text-xs text-muted-foreground">500+ designs inked</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-2 lg:grid-cols-5">
+          <div>
+            <Logo />
+            <p className="mt-4 text-xs text-muted-foreground">
+              Custom tattoos. Premium hygiene. Unmatched artistry.
+            </p>
+            <div className="mt-5 flex gap-4 text-muted-foreground">
+              <Instagram className="h-4 w-4" />
+              <MessageCircle className="h-4 w-4" />
+              <Youtube className="h-4 w-4" />
+              <Mail className="h-4 w-4" />
+            </div>
+          </div>
+          <div>
+            <p className="eyebrow">Quick Links</p>
+            <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
+              {navLinks.map((l) => (
+                <li key={l}>{l}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow">Our Services</p>
+            <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
+              {[
+                "Custom Tattoos",
+                "Cover Up Tattoos",
+                "Portrait Tattoos",
+                "Minimalist Tattoos",
+                "Geometric Tattoos",
+                "Black & Grey Tattoos",
+              ].map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow">Contact Us</p>
+            <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <Phone className="h-3.5 w-3.5" /> +91 77700 12345
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="h-3.5 w-3.5" /> ink@kryptonix.com
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5" /> Bangalore, India
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow">Working Hours</p>
+            <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
+              <li>Mon – Sat: 11:00 AM – 9:00 PM</li>
+              <li>Sunday: 12:00 PM – 8:00 PM</li>
+            </ul>
+          </div>
+        </div>
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-5 text-xs text-muted-foreground">
+          <p>© 2026 Kryptonix Tattoo Studio. All Rights Reserved.</p>
+          <p className="flex gap-4">
+            <span>Privacy Policy</span>
+            <span>Terms & Conditions</span>
+          </p>
+        </div>
+      </footer>
+    </main>
   );
 }
