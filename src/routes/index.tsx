@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   ChevronLeft,
@@ -32,6 +32,7 @@ import gallery4 from "@/assets/gallery-4.jpg";
 import gallery5 from "@/assets/gallery-5.jpg";
 import gallery6 from "@/assets/gallery-6.jpg";
 import ctaMachine from "@/assets/cta-machine.jpg";
+import artistPortrait from "@/assets/artist-portrait.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
