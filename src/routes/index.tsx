@@ -141,11 +141,11 @@ const reviews = [
 function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <span className="font-display text-3xl font-800 leading-none tracking-tighter">
+      <span className="font-display text-3xl font-extrabold leading-none tracking-tighter">
         K
       </span>
       <span className="leading-none">
-        <span className="block font-display text-lg font-700 tracking-wide">
+        <span className="block font-display text-lg font-bold tracking-wide">
           KRYPTONIX
         </span>
         <span className="block text-[0.6rem] tracking-[0.3em] text-muted-foreground">
@@ -160,7 +160,7 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   return (
     <div className="text-center">
       <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-2 text-2xl font-600 tracking-wide uppercase sm:text-3xl">
+      <h2 className="mt-2 text-2xl font-semibold tracking-wide uppercase sm:text-3xl">
         {title}
       </h2>
       <div className="mt-3 flex items-center justify-center gap-2 text-muted-foreground">
@@ -200,14 +200,14 @@ function Index() {
           <div className="flex items-center gap-4">
             <a
               href="tel:+917770012345"
-              className="hidden items-center gap-2 text-sm font-500 sm:flex"
+              className="hidden items-center gap-2 text-sm font-medium sm:flex"
             >
               <Phone className="h-4 w-4" />
               +91 77700 12345
             </a>
             <a
               href="#book"
-              className="rounded-sm bg-primary px-5 py-3 font-display text-xs font-600 tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+              className="rounded-sm bg-primary px-5 py-3 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
             >
               Book Consultation
             </a>
@@ -223,9 +223,9 @@ function Index() {
               <PenTool className="h-4 w-4 -rotate-45" />
               <p className="eyebrow">Ink Your Story</p>
             </div>
-            <h1 className="mt-5 font-display text-5xl leading-[0.95] font-500 tracking-tight uppercase sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 font-display text-5xl leading-[0.95] font-medium tracking-tight uppercase sm:text-6xl lg:text-7xl">
               Art you wear.
-              <span className="mt-1 block font-800">For life.</span>
+              <span className="mt-1 block font-extrabold">For life.</span>
             </h1>
             <p className="mt-6 max-w-md text-muted-foreground">
               Custom tattoos. Premium hygiene. Unmatched artistry.
@@ -235,13 +235,13 @@ function Index() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#book"
-                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-600 tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
               >
                 Book Consultation <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#gallery"
-                className="inline-flex items-center gap-3 rounded-sm border border-primary px-7 py-4 font-display text-xs font-600 tracking-[0.14em] uppercase transition-colors hover:bg-accent"
+                className="inline-flex items-center gap-3 rounded-sm border border-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:bg-accent"
               >
                 Explore Work
               </a>
@@ -252,7 +252,7 @@ function Index() {
                 <div key={title} className="flex items-start gap-3">
                   <Icon className="mt-0.5 h-6 w-6" strokeWidth={1.4} />
                   <div>
-                    <p className="font-display text-sm font-600">{title}</p>
+                    <p className="font-display text-sm font-semibold">{title}</p>
                     <p className="text-xs text-muted-foreground">{text}</p>
                   </div>
                 </div>
@@ -261,7 +261,7 @@ function Index() {
           </div>
 
           <div className="relative">
-            <span className="pointer-events-none absolute -top-10 left-0 font-display text-[12rem] leading-none font-800 text-accent select-none">
+            <span className="pointer-events-none absolute -top-10 left-0 font-display text-[12rem] leading-none font-extrabold text-accent select-none">
               1
             </span>
             <img
@@ -304,7 +304,7 @@ function Index() {
             {stats.map(({ icon: Icon, value, label }) => (
               <div key={label} className="text-center">
                 <Icon className="mx-auto h-7 w-7" strokeWidth={1.3} />
-                <p className="mt-4 font-display text-3xl font-600">{value}</p>
+                <p className="mt-4 font-display text-3xl font-semibold">{value}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{label}</p>
               </div>
             ))}
@@ -330,7 +330,7 @@ function Index() {
                 className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="px-3 py-4 text-center">
-                <h3 className="font-display text-xs font-600 tracking-[0.12em] uppercase">
+                <h3 className="font-display text-xs font-semibold tracking-[0.12em] uppercase">
                   {name}
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
@@ -343,7 +343,7 @@ function Index() {
         <div className="mt-8 text-center">
           <a
             href="#book"
-            className="inline-flex rounded-sm bg-primary px-7 py-3.5 font-display text-xs font-600 tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+            className="inline-flex rounded-sm bg-primary px-7 py-3.5 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
           >
             View All Services
           </a>
@@ -358,7 +358,7 @@ function Index() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`rounded-sm px-4 py-2 text-xs font-500 transition-colors ${
+              className={`rounded-sm px-4 py-2 text-xs font-medium transition-colors ${
                 filter === f
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -384,7 +384,7 @@ function Index() {
         <div className="mt-8 text-center">
           <a
             href="#book"
-            className="inline-flex items-center gap-3 rounded-sm border border-primary px-7 py-3.5 font-display text-xs font-600 tracking-[0.14em] uppercase transition-colors hover:bg-accent"
+            className="inline-flex items-center gap-3 rounded-sm border border-primary px-7 py-3.5 font-display text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:bg-accent"
           >
             View Full Gallery <ArrowRight className="h-4 w-4" />
           </a>
@@ -409,7 +409,7 @@ function Index() {
                 <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
                   “{quote}”
                 </blockquote>
-                <figcaption className="mt-5 font-display text-sm font-600">
+                <figcaption className="mt-5 font-display text-sm font-semibold">
                   — {name}
                 </figcaption>
               </figure>
@@ -458,7 +458,7 @@ function Index() {
           <div className="flex flex-wrap items-center justify-between gap-6 p-8">
             <div>
               <p className="eyebrow">Ready To Get Inked?</p>
-              <h2 className="mt-2 text-2xl font-600 tracking-wide uppercase">
+              <h2 className="mt-2 text-2xl font-semibold tracking-wide uppercase">
                 Book Your Consultation
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -469,7 +469,7 @@ function Index() {
             <div className="flex flex-col items-start gap-3">
               <a
                 href="tel:+917770012345"
-                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-600 tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-opacity hover:opacity-90"
               >
                 Book Now <ArrowRight className="h-4 w-4" />
               </a>
