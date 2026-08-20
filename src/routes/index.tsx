@@ -401,7 +401,7 @@ function Index() {
       {/* Artist */}
       <section id="artist" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-16">
         <span className="pointer-events-none absolute bottom-4 left-0 font-display text-[9rem] leading-none font-bold tracking-tight text-accent select-none sm:text-[12rem]">
-          XING
+          KRYPTONIX
         </span>
 
         <div className="relative grid gap-12 lg:grid-cols-[0.9fr_1fr]">
@@ -416,7 +416,7 @@ function Index() {
                 className="eyebrow whitespace-nowrap"
                 style={{ writingMode: "vertical-rl" }}
               >
-                Xing Tattoo Studio
+                Kryptonix Tattoo Studio
               </span>
             </div>
 
