@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
-  ChevronLeft,
-  ChevronRight,
   Diamond,
   Instagram,
   Mail,
@@ -32,6 +30,7 @@ import gallery4 from "@/assets/gallery-4.jpg";
 import gallery5 from "@/assets/gallery-5.jpg";
 import gallery6 from "@/assets/gallery-6.jpg";
 import ctaMachine from "@/assets/cta-machine.jpg";
+import artistPortrait from "@/assets/artist-portrait.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -172,16 +171,77 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   );
 }
 
+const socials = [
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://instagram.com",
+    style: { background: "var(--gradient-instagram)" },
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    href: "https://wa.me/917770012345",
+    style: { background: "var(--brand-whatsapp)" },
+  },
+  {
+    icon: Phone,
+    label: "Call Us",
+    href: "tel:+917770012345",
+    style: { background: "var(--brand-call)" },
+  },
+];
+
+function SocialDock() {
+  const [docked, setDocked] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setDocked(window.scrollY > 420);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div
+      className={`fixed z-50 flex transition-all duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${
+        docked
+          ? "bottom-6 left-1/2 -translate-x-1/2 translate-y-0 flex-row gap-4 rounded-full border border-border bg-card/90 px-5 py-3 shadow-[var(--shadow-soft)] backdrop-blur"
+          : "top-1/2 right-5 -translate-y-1/2 flex-col gap-5 rounded-full border border-transparent px-2 py-2"
+      }`}
+    >
+      {socials.map(({ icon: Icon, label, href, style }, i) => (
+        <a
+          key={label}
+          href={href}
+          target={href.startsWith("http") ? "_blank" : undefined}
+          rel="noreferrer"
+          aria-label={label}
+          className="group auto-pop relative flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground shadow-[var(--shadow-card)] transition-transform duration-300 hover:scale-125"
+          style={{ ...style, animationDelay: `${i * 0.35}s` }}
+        >
+          <Icon className="h-5 w-5" strokeWidth={1.8} />
+          <span
+            className={`pointer-events-none absolute font-display text-[0.6rem] tracking-[0.14em] uppercase whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
+              docked ? "-top-7" : "right-14"
+            }`}
+          >
+            {label}
+          </span>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function Index() {
   const [filter, setFilter] = useState("All");
-  const [page, setPage] = useState(0);
-  const pages = Math.ceil(reviews.length / 3);
-  const visibleReviews = reviews.slice(page * 3, page * 3 + 3);
   const visibleGallery =
     filter === "All" ? gallery : gallery.filter((g) => g.tag === filter);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <SocialDock />
       {/* Nav */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
@@ -269,22 +329,9 @@ function Index() {
               alt="Black and grey realism statue tattoo on an upper arm"
               width={1024}
               height={1536}
-              className="relative mx-auto max-h-[600px] w-full rounded-sm object-cover"
+              className="blend-image relative mx-auto max-h-[600px] w-full object-cover"
             />
           </div>
-        </div>
-
-        <div className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 flex-col items-center gap-6 border-l border-border pl-4 lg:flex">
-          {[
-            { icon: Instagram, label: "Instagram" },
-            { icon: MessageCircle, label: "WhatsApp" },
-            { icon: Phone, label: "Call Us" },
-          ].map(({ icon: Icon, label }) => (
-            <div key={label} className="text-center">
-              <Icon className="mx-auto h-5 w-5" strokeWidth={1.4} />
-              <p className="mt-1 text-[0.6rem] text-muted-foreground">{label}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -319,7 +366,7 @@ function Index() {
           {styles.map(({ img, name, text }) => (
             <article
               key={name}
-              className="group overflow-hidden rounded-sm border border-border bg-card shadow-[var(--shadow-card)]"
+              className="group media-hover rounded-sm border border-border bg-card shadow-[var(--shadow-card)]"
             >
               <img
                 src={img}
@@ -327,15 +374,16 @@ function Index() {
                 width={640}
                 height={768}
                 loading="lazy"
-                className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="h-44 w-full object-cover"
               />
-              <div className="px-3 py-4 text-center">
+              <div className="relative px-3 py-4 text-center">
                 <h3 className="font-display text-xs font-semibold tracking-[0.12em] uppercase">
                   {name}
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                   {text}
                 </p>
+                <span className="mx-auto mt-3 block h-px w-0 bg-primary transition-all duration-500 group-hover:w-10" />
               </div>
             </article>
           ))}
@@ -347,6 +395,77 @@ function Index() {
           >
             View All Services
           </a>
+        </div>
+      </section>
+
+      {/* Artist */}
+      <section id="artist" className="mx-auto max-w-7xl px-5 pb-16">
+        <SectionHeading eyebrow="The Artist" title="One Hand Behind Every Piece" />
+        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[0.85fr_1fr]">
+          <div className="group relative">
+            <img
+              src={artistPortrait}
+              alt="Kryptonix founder and tattoo artist with full sleeve tattoos"
+              width={1024}
+              height={1280}
+              loading="lazy"
+              className="blend-image mx-auto max-h-[560px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="absolute top-6 left-6 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-border bg-card/90 text-center shadow-[var(--shadow-card)] backdrop-blur transition-transform duration-500 group-hover:scale-110">
+              <span className="font-display text-2xl font-bold">15+</span>
+              <span className="text-[0.55rem] tracking-[0.2em] text-muted-foreground uppercase">
+                Years
+                <br />
+                Of Craft
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-display text-3xl leading-tight font-medium tracking-tight sm:text-4xl">
+              One hand behind
+              <span className="block font-script text-4xl sm:text-5xl">
+                every piece
+              </span>
+              in this studio.
+            </h3>
+            <div className="mt-5 h-px w-full bg-border" />
+            <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
+              No handoffs, no rotating chairs — every consultation, every stencil
+              and every session at Kryptonix is done by the same person. That's
+              the whole model: fewer tattoos, more attention to each one.
+            </p>
+
+            <dl className="mt-8 divide-y divide-border border-y border-border text-sm">
+              {[
+                ["Studio Since", "2022"],
+                ["Working Styles", "Black & grey, fine line, illustrative, colour"],
+                ["Approach", "Custom design, appointment only"],
+                ["Languages", "English, हिन्दी, ಕನ್ನಡ"],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="grid gap-1 py-3 transition-colors hover:bg-accent sm:grid-cols-[180px_1fr]"
+                >
+                  <dt className="eyebrow">{label}</dt>
+                  <dd className="text-muted-foreground">{value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-8 flex flex-wrap items-center gap-8">
+              <div>
+                <p className="font-script text-3xl">Kryptonix</p>
+                <p className="eyebrow mt-1">Founder &amp; Artist</p>
+              </div>
+              <a
+                href="#book"
+                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+              >
+                Discuss Your Idea <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -369,16 +488,23 @@ function Index() {
           ))}
         </div>
         <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-          {visibleGallery.map(({ img, alt }) => (
-            <img
-              key={alt}
-              src={img}
-              alt={alt}
-              width={640}
-              height={768}
-              loading="lazy"
-              className="h-56 w-full rounded-sm object-cover transition-transform duration-500 hover:scale-[1.03]"
-            />
+          {visibleGallery.map(({ img, alt, tag }) => (
+            <figure key={alt} className="group media-hover rounded-sm">
+              <img
+                src={img}
+                alt={alt}
+                width={640}
+                height={768}
+                loading="lazy"
+                className="h-56 w-full object-cover"
+              />
+              <figcaption className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/85 via-primary/20 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <span className="font-display text-[0.6rem] tracking-[0.16em] text-primary-foreground uppercase">
+                  {tag}
+                </span>
+                <span className="mt-1 text-xs text-primary-foreground/80">{alt}</span>
+              </figcaption>
+            </figure>
           ))}
         </div>
         <div className="mt-8 text-center">
@@ -394,16 +520,16 @@ function Index() {
       {/* Reviews */}
       <section className="mx-auto max-w-7xl px-5 pb-16">
         <SectionHeading eyebrow="Client Love" title="What Our Clients Say" />
-        <div className="relative mt-8">
-          <div className="grid gap-5 px-0 md:grid-cols-3 lg:px-12">
-            {visibleReviews.map(({ quote, name }) => (
+        <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+          <div className="marquee-track gap-5">
+            {[...reviews, ...reviews].map(({ quote, name }, i) => (
               <figure
-                key={name}
-                className="rounded-sm border border-border bg-card p-6 shadow-[var(--shadow-card)]"
+                key={`${name}-${i}`}
+                className="w-[300px] shrink-0 rounded-sm border border-border bg-card p-6 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[var(--shadow-soft)] sm:w-[360px]"
               >
                 <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star key={s} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
                 <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -415,32 +541,6 @@ function Index() {
               </figure>
             ))}
           </div>
-          <button
-            aria-label="Previous reviews"
-            onClick={() => setPage((p) => (p - 1 + pages) % pages)}
-            className="absolute top-1/2 left-0 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card lg:flex"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-          <button
-            aria-label="Next reviews"
-            onClick={() => setPage((p) => (p + 1) % pages)}
-            className="absolute top-1/2 right-0 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card lg:flex"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
-        <div className="mt-6 flex justify-center gap-2">
-          {Array.from({ length: pages }).map((_, i) => (
-            <button
-              key={i}
-              aria-label={`Reviews page ${i + 1}`}
-              onClick={() => setPage(i)}
-              className={`h-2 w-2 rounded-full transition-colors ${
-                page === i ? "bg-primary" : "bg-border"
-              }`}
-            />
-          ))}
         </div>
       </section>
 
