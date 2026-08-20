@@ -256,34 +256,87 @@ function SocialDock() {
 }
 
 function OfferModal({ onClose }: { onClose: () => void }) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const [closing, setClosing] = useState(false);
+
+  const requestClose = useCallback(() => {
+    setClosing((c) => {
+      if (!c) window.setTimeout(onClose, 240);
+      return true;
+    });
   }, [onClose]);
 
+  useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        requestClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const nodes = panelRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!nodes || nodes.length === 0) return;
+      const list = Array.from(nodes).filter((n) => n.offsetParent !== null);
+      if (list.length === 0) return;
+      const first = list[0];
+      const last = list[list.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !panelRef.current?.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      previouslyFocused?.focus?.();
+    };
+  }, [requestClose]);
+
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="offer-title"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-6"
+    >
       <div
-        className="absolute inset-0 animate-fade-in bg-primary/60 backdrop-blur-sm"
-        onClick={onClose}
+        className={`absolute inset-0 bg-primary/60 backdrop-blur-sm transition-opacity duration-300 ${
+          closing ? "opacity-0" : "animate-fade-in opacity-100"
+        }`}
+        onClick={requestClose}
       />
-      <div className="relative z-10 max-h-[92vh] w-full max-w-5xl animate-scale-in overflow-y-auto rounded-sm border border-amber-700/30 bg-background shadow-[var(--shadow-soft)]">
+      <div
+        ref={panelRef}
+        className={`relative z-10 max-h-[94vh] w-full max-w-5xl overflow-y-auto rounded-sm border border-amber-700/30 bg-background shadow-[var(--shadow-soft)] transition-all duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${
+          closing ? "scale-95 opacity-0" : "animate-scale-in scale-100 opacity-100"
+        }`}
+      >
         <button
-          onClick={onClose}
+          ref={closeRef}
+          onClick={requestClose}
           aria-label="Close offer"
-          className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/90 transition-transform duration-300 hover:scale-110 hover:bg-accent"
+          className="absolute top-3 right-3 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/95 shadow-[var(--shadow-card)] transition-transform duration-300 hover:scale-110 hover:bg-accent focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:outline-none sm:top-4 sm:right-4"
         >
           <X className="h-4 w-4" />
         </button>
 
         <div className="grid lg:grid-cols-[1.05fr_1fr]">
           {/* Copy */}
-          <div className="flex gap-5 p-7 sm:p-10">
+          <div className="flex gap-5 p-5 pt-14 sm:p-10 sm:pt-12">
             <div className="hidden shrink-0 flex-col items-center gap-4 lg:flex">
               <span className="font-display text-xl font-bold text-amber-700">✕</span>
               <span className="h-14 w-px bg-border" />
@@ -308,9 +361,12 @@ function OfferModal({ onClose }: { onClose: () => void }) {
 
             <div>
               <p className="eyebrow text-amber-700">Limited Time Offer</p>
-              <h2 className="mt-3 font-display text-4xl leading-[0.95] font-medium tracking-tight sm:text-5xl">
+              <h2
+                id="offer-title"
+                className="mt-3 font-display text-3xl leading-[0.95] font-medium tracking-tight sm:text-5xl"
+              >
                 Exclusive
-                <span className="mt-1 block font-script text-5xl text-amber-700 sm:text-6xl">
+                <span className="mt-1 block font-script text-4xl text-amber-700 sm:text-6xl">
                   Ink Offer
                 </span>
               </h2>
@@ -374,8 +430,8 @@ function OfferModal({ onClose }: { onClose: () => void }) {
               </div>
 
               <button
-                onClick={onClose}
-                className="mt-7 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.14em] uppercase text-muted-foreground transition-colors hover:text-foreground"
+                onClick={requestClose}
+                className="mt-7 inline-flex items-center gap-2 rounded-sm border border-border px-5 py-3 font-display text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase transition-all duration-300 hover:-translate-y-0.5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:outline-none"
               >
                 ← Back To Home
               </button>
@@ -383,30 +439,30 @@ function OfferModal({ onClose }: { onClose: () => void }) {
           </div>
 
           {/* Visual */}
-          <div className="relative min-h-[260px] bg-background">
+          <div className="relative min-h-[240px] bg-background">
             <img
               src={offerArm.url}
               alt="Statue sleeve tattoo being inked with a tattoo machine"
-              className="blend-image h-full w-full object-cover"
+              className="blend-image h-56 w-full object-cover sm:h-72 lg:h-full"
             />
-            <div className="absolute top-16 right-6 flex h-32 w-32 flex-col items-center justify-center rounded-full border border-amber-700/40 bg-background/90 text-center backdrop-blur">
+            <div className="absolute top-4 right-4 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-amber-700/40 bg-background/90 text-center backdrop-blur sm:top-16 sm:right-6 sm:h-32 sm:w-32">
               <p className="text-[0.55rem] tracking-[0.18em] text-muted-foreground uppercase">
                 Offer ends in
               </p>
-              <p className="font-display text-xl font-bold">05 : 12 : 47</p>
+              <p className="font-display text-base font-bold sm:text-xl">05 : 12 : 47</p>
               <p className="text-[0.5rem] tracking-[0.16em] text-muted-foreground uppercase">
                 Days Hrs Mins
               </p>
             </div>
 
-            <div className="absolute inset-x-5 bottom-5 space-y-3 rounded-sm border border-amber-700/40 bg-primary p-5">
+            <div className="mx-5 mb-5 space-y-3 rounded-sm border border-amber-700/40 bg-primary p-4 sm:p-5 lg:absolute lg:inset-x-5 lg:bottom-5 lg:mx-0 lg:mb-0">
               <p className="flex items-center gap-2 font-display text-[0.65rem] tracking-[0.14em] text-primary-foreground uppercase">
                 <CalendarDays className="h-4 w-4 text-amber-500" /> Book your appointment now
               </p>
               <a
                 href="#book"
-                onClick={onClose}
-                className="flex items-center justify-center gap-2 bg-amber-600 px-4 py-3 font-display text-[0.7rem] font-semibold tracking-[0.14em] uppercase transition-transform duration-300 hover:-translate-y-0.5"
+                onClick={requestClose}
+                className="flex items-center justify-center gap-2 bg-amber-600 px-4 py-3 font-display text-[0.7rem] font-semibold tracking-[0.14em] uppercase transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-background focus-visible:outline-none"
               >
                 Book A Consultation <ArrowRight className="h-4 w-4" />
               </a>
@@ -414,7 +470,7 @@ function OfferModal({ onClose }: { onClose: () => void }) {
                 href="https://wa.me/917770012345"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 border border-amber-600/60 px-4 py-3 font-display text-[0.7rem] font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-transform duration-300 hover:-translate-y-0.5"
+                className="flex items-center justify-center gap-2 border border-amber-600/60 px-4 py-3 font-display text-[0.7rem] font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-background focus-visible:outline-none"
               >
                 <MessageCircle className="h-4 w-4" /> Chat On WhatsApp
               </a>
