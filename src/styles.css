@@ -179,7 +179,6 @@
     rgba(0, 0, 0, 0.55) 68%,
     transparent 92%
   );
-  mix-blend-mode: multiply;
 }
 
 /* Card / media hover treatment used across services + gallery */
