@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
+  CalendarDays,
+  Clock,
   Diamond,
   Instagram,
   Mail,
@@ -13,6 +15,7 @@ import {
   Sparkles,
   Star,
   Users,
+  X,
   Youtube,
 } from "lucide-react";
 
@@ -31,6 +34,7 @@ import gallery5 from "@/assets/gallery-5.jpg";
 import gallery6 from "@/assets/gallery-6.jpg";
 import ctaMachine from "@/assets/cta-machine.jpg";
 import artistPhoto from "@/assets/artist-photo.png.asset.json";
+import offerArm from "@/assets/offer-arm.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,13 +59,31 @@ export const Route = createFileRoute("/")({
 });
 
 const navLinks = [
-  "Home",
-  "About Us",
-  "Services",
-  "Gallery",
-  "Reviews",
-  "FAQ",
-  "Contact",
+  { label: "Home", href: "#home" },
+  { label: "About Us", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "FAQ", href: "#faq" },
+];
+
+const faqs = [
+  [
+    "Does getting a tattoo hurt?",
+    "There is some discomfort, but we use premium needles and take breaks so every session stays manageable.",
+  ],
+  [
+    "How do I book a session?",
+    "Send us your idea on WhatsApp or book a free consultation — we sketch a custom design before your appointment.",
+  ],
+  [
+    "Is the studio hygienic?",
+    "100%. Single-use needles, sealed inks and a fully sterilised workstation for every client.",
+  ],
+  [
+    "How much does a tattoo cost?",
+    "Pricing depends on size, detail and placement. We share an exact quote after the design consultation.",
+  ],
 ];
 
 const features = [
