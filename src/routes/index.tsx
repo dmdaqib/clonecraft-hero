@@ -269,15 +269,21 @@ function Index() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
           <Logo />
           <nav className="hidden items-center gap-7 text-sm lg:flex">
-            {navLinks.map((link) => (
+            {navLinks.map(({ label, href }) => (
               <a
-                key={link}
-                href="#"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                key={label}
+                href={href}
+                className="relative text-muted-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all after:duration-300 hover:text-foreground hover:after:w-full"
               >
-                {link}
+                {label}
               </a>
             ))}
+            <button
+              onClick={() => setOfferOpen(true)}
+              className="font-display text-xs font-semibold tracking-[0.14em] text-amber-700 uppercase transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Offer
+            </button>
           </nav>
           <div className="flex items-center gap-4">
             <a
@@ -669,8 +675,12 @@ function Index() {
           <div>
             <p className="eyebrow">Quick Links</p>
             <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
-              {navLinks.map((l) => (
-                <li key={l}>{l}</li>
+              {navLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <a href={href} className="transition-colors hover:text-foreground">
+                    {label}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>
