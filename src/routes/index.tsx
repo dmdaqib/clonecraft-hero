@@ -399,37 +399,87 @@ function Index() {
       </section>
 
       {/* Artist */}
-      <section id="artist" className="mx-auto max-w-7xl px-5 pb-16">
-        <SectionHeading eyebrow="The Artist" title="One Hand Behind Every Piece" />
-        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[0.85fr_1fr]">
-          <div className="group relative">
-            <img
-              src={artistPortrait}
-              alt="Kryptonix founder and tattoo artist with full sleeve tattoos"
-              width={1024}
-              height={1280}
-              loading="lazy"
-              className="blend-image mx-auto max-h-[560px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
-            <div className="absolute top-6 left-6 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-border bg-card/90 text-center shadow-[var(--shadow-card)] backdrop-blur transition-transform duration-500 group-hover:scale-110">
-              <span className="font-display text-2xl font-bold">15+</span>
-              <span className="text-[0.55rem] tracking-[0.2em] text-muted-foreground uppercase">
-                Years
-                <br />
-                Of Craft
+      <section id="artist" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-16">
+        <span className="pointer-events-none absolute bottom-4 left-0 font-display text-[9rem] leading-none font-bold tracking-tight text-accent select-none sm:text-[12rem]">
+          XING
+        </span>
+
+        <div className="relative grid gap-12 lg:grid-cols-[0.9fr_1fr]">
+          {/* Left rail + portrait */}
+          <div className="flex gap-6">
+            <div className="hidden shrink-0 flex-col items-center gap-6 pt-2 lg:flex">
+              <span className="font-display text-2xl font-bold tracking-tight text-[color:var(--color-brand-gold,theme(colors.amber.700))]">
+                ✕
               </span>
+              <span className="h-24 w-px bg-border" />
+              <span
+                className="eyebrow whitespace-nowrap"
+                style={{ writingMode: "vertical-rl" }}
+              >
+                Xing Tattoo Studio
+              </span>
+            </div>
+
+            <div className="w-full">
+              <div className="group relative overflow-hidden bg-primary shadow-[var(--shadow-card)]">
+                <img
+                  src={artistPhoto.url}
+                  alt="Xing, founder and tattoo artist, arms crossed with full sleeve tattoos"
+                  width={980}
+                  height={1130}
+                  loading="lazy"
+                  className="w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+                <div className="absolute top-6 left-6 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-amber-600/60 bg-black/60 text-center backdrop-blur transition-transform duration-500 group-hover:scale-110">
+                  <span className="font-display text-2xl font-bold text-amber-500">
+                    15+
+                  </span>
+                  <span className="text-[0.5rem] tracking-[0.2em] text-amber-200/80 uppercase">
+                    Years
+                    <br />
+                    Of Craft
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-8 grid grid-cols-2 divide-border sm:grid-cols-4 sm:divide-x">
+                {[
+                  ["15+", "Years", "Of Craft"],
+                  ["1000+", "Custom", "Tattoos"],
+                  ["1", "Artist", "No Handoffs"],
+                  ["100%", "Focus On", "You"],
+                ].map(([value, l1, l2]) => (
+                  <div
+                    key={value}
+                    className="group px-3 py-2 text-center transition-transform duration-300 hover:-translate-y-1"
+                  >
+                    <p className="font-display text-2xl font-semibold transition-colors group-hover:text-amber-700">
+                      {value}
+                    </p>
+                    <p className="mt-1 text-[0.6rem] tracking-[0.18em] text-muted-foreground uppercase">
+                      {l1}
+                      <br />
+                      {l2}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div>
-            <h3 className="font-display text-3xl leading-tight font-medium tracking-tight sm:text-4xl">
+          <div className="lg:pt-4">
+            <p className="eyebrow flex items-center gap-3">
+              <span className="h-px w-8 bg-amber-700" /> The Artist
+            </p>
+            <h3 className="mt-6 font-display text-4xl leading-[1.1] font-medium tracking-tight sm:text-5xl">
               One hand behind
-              <span className="block font-script text-4xl sm:text-5xl">
-                every piece
-              </span>
-              in this studio.
+              <br />
+              <span className="font-script text-5xl text-amber-700 sm:text-6xl">
+                every
+              </span>{" "}
+              piece in this studio.
             </h3>
-            <div className="mt-5 h-px w-full bg-border" />
+            <div className="mt-6 h-px w-full bg-border" />
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
               No handoffs, no rotating chairs — every consultation, every stencil
               and every session at Kryptonix is done by the same person. That's
