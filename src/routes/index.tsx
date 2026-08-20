@@ -256,14 +256,196 @@ function SocialDock() {
   );
 }
 
+function OfferModal({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6">
+      <div
+        className="absolute inset-0 animate-fade-in bg-primary/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div className="relative z-10 max-h-[92vh] w-full max-w-5xl animate-scale-in overflow-y-auto rounded-sm border border-amber-700/30 bg-background shadow-[var(--shadow-soft)]">
+        <button
+          onClick={onClose}
+          aria-label="Close offer"
+          className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/90 transition-transform duration-300 hover:scale-110 hover:bg-accent"
+        >
+          <X className="h-4 w-4" />
+        </button>
+
+        <div className="grid lg:grid-cols-[1.05fr_1fr]">
+          {/* Copy */}
+          <div className="flex gap-5 p-7 sm:p-10">
+            <div className="hidden shrink-0 flex-col items-center gap-4 lg:flex">
+              <span className="font-display text-xl font-bold text-amber-700">✕</span>
+              <span className="h-14 w-px bg-border" />
+              <span
+                className="eyebrow whitespace-nowrap"
+                style={{ writingMode: "vertical-rl" }}
+              >
+                Follow Kryptonix
+              </span>
+              <span className="h-10 w-px bg-border" />
+              {socials.map(({ icon: Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:text-amber-700"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+
+            <div>
+              <p className="eyebrow text-amber-700">Limited Time Offer</p>
+              <h2 className="mt-3 font-display text-4xl leading-[0.95] font-medium tracking-tight sm:text-5xl">
+                Exclusive
+                <span className="mt-1 block font-script text-5xl text-amber-700 sm:text-6xl">
+                  Ink Offer
+                </span>
+              </h2>
+              <p className="mt-5 text-sm text-muted-foreground">
+                Premium tattoos. Exclusive savings.
+                <br />
+                Book your story today.
+              </p>
+
+              <div className="mt-6 flex items-stretch gap-5 border border-amber-700/40 p-5">
+                <div>
+                  <p className="eyebrow text-amber-700">Upto</p>
+                  <p className="font-display text-5xl font-bold leading-none">
+                    20<span className="text-amber-700">%</span>
+                  </p>
+                  <p className="font-display text-sm font-semibold tracking-[0.18em] text-amber-700 uppercase">
+                    Off
+                  </p>
+                </div>
+                <span className="w-px bg-amber-700/30" />
+                <div className="self-center">
+                  <p className="text-xs tracking-wide text-muted-foreground uppercase">
+                    On all
+                  </p>
+                  <p className="font-display text-xl font-bold tracking-[0.1em] text-amber-700 uppercase">
+                    Custom
+                    <br />
+                    Tattoos
+                  </p>
+                </div>
+              </div>
+              <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                Offer valid for a limited time only.
+                <br />
+                Don't miss your chance to get inked.
+              </p>
+
+              <div className="mt-6 grid gap-4 border-t border-border pt-5 sm:grid-cols-2">
+                {[
+                  [ShieldCheck, "100% Safe & Hygienic", "Your safety is our priority."],
+                  [PenTool, "Custom Designs", "Unique tattoos designed for you."],
+                  [Star, "Experienced Artist", "Skilled. Creative. Passionate."],
+                  [Diamond, "Premium Equipment", "Industry standard tools."],
+                ].map(([Icon, title, text]) => {
+                  const I = Icon as typeof ShieldCheck;
+                  return (
+                    <div
+                      key={title as string}
+                      className="flex items-start gap-3 transition-transform duration-300 hover:-translate-y-0.5"
+                    >
+                      <I className="mt-0.5 h-5 w-5 text-amber-700" strokeWidth={1.4} />
+                      <div>
+                        <p className="font-display text-xs font-semibold tracking-[0.1em] uppercase">
+                          {title as string}
+                        </p>
+                        <p className="text-xs text-muted-foreground">{text as string}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={onClose}
+                className="mt-7 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.14em] uppercase text-muted-foreground transition-colors hover:text-foreground"
+              >
+                ← Back To Home
+              </button>
+            </div>
+          </div>
+
+          {/* Visual */}
+          <div className="relative min-h-[260px] bg-background">
+            <img
+              src={offerArm.url}
+              alt="Statue sleeve tattoo being inked with a tattoo machine"
+              className="blend-image h-full w-full object-cover"
+            />
+            <div className="absolute top-6 right-6 flex h-32 w-32 flex-col items-center justify-center rounded-full border border-amber-700/40 bg-background/90 text-center backdrop-blur">
+              <p className="text-[0.55rem] tracking-[0.18em] text-muted-foreground uppercase">
+                Offer ends in
+              </p>
+              <p className="font-display text-xl font-bold">05 : 12 : 47</p>
+              <p className="text-[0.5rem] tracking-[0.16em] text-muted-foreground uppercase">
+                Days Hrs Mins
+              </p>
+            </div>
+
+            <div className="absolute inset-x-5 bottom-5 space-y-3 rounded-sm border border-amber-700/40 bg-primary p-5">
+              <p className="flex items-center gap-2 font-display text-[0.65rem] tracking-[0.14em] text-primary-foreground uppercase">
+                <CalendarDays className="h-4 w-4 text-amber-500" /> Book your appointment now
+              </p>
+              <a
+                href="#book"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 bg-amber-600 px-4 py-3 font-display text-[0.7rem] font-semibold tracking-[0.14em] uppercase transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                Book A Consultation <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href="https://wa.me/917770012345"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-2 border border-amber-600/60 px-4 py-3 font-display text-[0.7rem] font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                <MessageCircle className="h-4 w-4" /> Chat On WhatsApp
+              </a>
+              <p className="flex items-center justify-center gap-2 border-t border-amber-600/30 pt-3 text-[0.65rem] tracking-[0.12em] text-primary-foreground/80 uppercase">
+                <ShieldCheck className="h-4 w-4 text-amber-500" /> 100% safe &amp; hygienic studio
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Index() {
   const [filter, setFilter] = useState("All");
+  const [offerOpen, setOfferOpen] = useState(false);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setOfferOpen(true), 10000);
+    return () => window.clearTimeout(t);
+  }, []);
+
   const visibleGallery =
     filter === "All" ? gallery : gallery.filter((g) => g.tag === filter);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SocialDock />
+      {offerOpen && <OfferModal onClose={() => setOfferOpen(false)} />}
       {/* Nav */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
