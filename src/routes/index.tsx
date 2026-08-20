@@ -455,16 +455,16 @@ function Index() {
       {/* Reviews */}
       <section className="mx-auto max-w-7xl px-5 pb-16">
         <SectionHeading eyebrow="Client Love" title="What Our Clients Say" />
-        <div className="relative mt-8">
-          <div className="grid gap-5 px-0 md:grid-cols-3 lg:px-12">
-            {visibleReviews.map(({ quote, name }) => (
+        <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+          <div className="marquee-track gap-5">
+            {[...reviews, ...reviews].map(({ quote, name }, i) => (
               <figure
-                key={name}
-                className="rounded-sm border border-border bg-card p-6 shadow-[var(--shadow-card)]"
+                key={`${name}-${i}`}
+                className="w-[300px] shrink-0 rounded-sm border border-border bg-card p-6 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[var(--shadow-soft)] sm:w-[360px]"
               >
                 <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star key={s} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
                 <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -476,32 +476,6 @@ function Index() {
               </figure>
             ))}
           </div>
-          <button
-            aria-label="Previous reviews"
-            onClick={() => setPage((p) => (p - 1 + pages) % pages)}
-            className="absolute top-1/2 left-0 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card lg:flex"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-          <button
-            aria-label="Next reviews"
-            onClick={() => setPage((p) => (p + 1) % pages)}
-            className="absolute top-1/2 right-0 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card lg:flex"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
-        <div className="mt-6 flex justify-center gap-2">
-          {Array.from({ length: pages }).map((_, i) => (
-            <button
-              key={i}
-              aria-label={`Reviews page ${i + 1}`}
-              onClick={() => setPage(i)}
-              className={`h-2 w-2 rounded-full transition-colors ${
-                page === i ? "bg-primary" : "bg-border"
-              }`}
-            />
-          ))}
         </div>
       </section>
 
