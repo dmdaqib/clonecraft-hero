@@ -286,8 +286,8 @@ function OfferModal({ onClose }: { onClose: () => void }) {
         (n) => n.offsetParent !== null,
       );
       if (list.length === 0) return;
-      const first = list[0];
-      const last = list[list.length - 1];
+      const first = list[0]!;
+      const last = list[list.length - 1]!;
       const active = document.activeElement;
       if (e.shiftKey && (active === first || !panelRef.current?.contains(active))) {
         e.preventDefault();
