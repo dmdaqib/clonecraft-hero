@@ -389,7 +389,7 @@ function OfferModal({ onClose }: { onClose: () => void }) {
               alt="Statue sleeve tattoo being inked with a tattoo machine"
               className="blend-image h-full w-full object-cover"
             />
-            <div className="absolute top-6 right-6 flex h-32 w-32 flex-col items-center justify-center rounded-full border border-amber-700/40 bg-background/90 text-center backdrop-blur">
+            <div className="absolute top-16 right-6 flex h-32 w-32 flex-col items-center justify-center rounded-full border border-amber-700/40 bg-background/90 text-center backdrop-blur">
               <p className="text-[0.55rem] tracking-[0.18em] text-muted-foreground uppercase">
                 Offer ends in
               </p>
