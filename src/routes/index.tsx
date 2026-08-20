@@ -397,6 +397,77 @@ function Index() {
         </div>
       </section>
 
+      {/* Artist */}
+      <section id="artist" className="mx-auto max-w-7xl px-5 pb-16">
+        <SectionHeading eyebrow="The Artist" title="One Hand Behind Every Piece" />
+        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[0.85fr_1fr]">
+          <div className="group relative">
+            <img
+              src={artistPortrait}
+              alt="Kryptonix founder and tattoo artist with full sleeve tattoos"
+              width={1024}
+              height={1280}
+              loading="lazy"
+              className="blend-image mx-auto max-h-[560px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="absolute top-6 left-6 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-border bg-card/90 text-center shadow-[var(--shadow-card)] backdrop-blur transition-transform duration-500 group-hover:scale-110">
+              <span className="font-display text-2xl font-bold">15+</span>
+              <span className="text-[0.55rem] tracking-[0.2em] text-muted-foreground uppercase">
+                Years
+                <br />
+                Of Craft
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-display text-3xl leading-tight font-medium tracking-tight sm:text-4xl">
+              One hand behind
+              <span className="block font-script text-4xl sm:text-5xl">
+                every piece
+              </span>
+              in this studio.
+            </h3>
+            <div className="mt-5 h-px w-full bg-border" />
+            <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
+              No handoffs, no rotating chairs — every consultation, every stencil
+              and every session at Kryptonix is done by the same person. That's
+              the whole model: fewer tattoos, more attention to each one.
+            </p>
+
+            <dl className="mt-8 divide-y divide-border border-y border-border text-sm">
+              {[
+                ["Studio Since", "2022"],
+                ["Working Styles", "Black & grey, fine line, illustrative, colour"],
+                ["Approach", "Custom design, appointment only"],
+                ["Languages", "English, हिन्दी, ಕನ್ನಡ"],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="grid gap-1 py-3 transition-colors hover:bg-accent sm:grid-cols-[180px_1fr]"
+                >
+                  <dt className="eyebrow">{label}</dt>
+                  <dd className="text-muted-foreground">{value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-8 flex flex-wrap items-center gap-8">
+              <div>
+                <p className="font-script text-3xl">Kryptonix</p>
+                <p className="eyebrow mt-1">Founder &amp; Artist</p>
+              </div>
+              <a
+                href="#book"
+                className="inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-4 font-display text-xs font-semibold tracking-[0.14em] text-primary-foreground uppercase transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+              >
+                Discuss Your Idea <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Gallery */}
       <section id="gallery" className="mx-auto max-w-7xl px-5 pb-16">
         <SectionHeading eyebrow="Our Work" title="Tattoo Gallery" />
