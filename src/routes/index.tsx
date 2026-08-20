@@ -486,7 +486,7 @@ function Index() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section id="home" className="relative overflow-hidden">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-12 lg:grid-cols-2 lg:py-16">
           <div>
             <div className="flex items-center gap-3">
@@ -546,7 +546,7 @@ function Index() {
       </section>
 
       {/* About + stats */}
-      <section className="mx-auto max-w-7xl px-5 pb-16">
+      <section id="about" className="mx-auto max-w-7xl px-5 pb-16">
         <div className="grid gap-8 rounded-sm border border-border bg-card p-8 shadow-[var(--shadow-card)] lg:grid-cols-[1fr_2.4fr]">
           <div className="lg:border-r lg:border-border lg:pr-8">
             <p className="eyebrow">About Us</p>
@@ -570,7 +570,7 @@ function Index() {
       </section>
 
       {/* Services */}
-      <section className="mx-auto max-w-7xl px-5 pb-16">
+      <section id="services" className="mx-auto max-w-7xl px-5 pb-16">
         <SectionHeading eyebrow="Our Services" title="Tattoo Styles We Specialize In" />
         <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
           {styles.map(({ img, name, text }) => (
@@ -610,10 +610,6 @@ function Index() {
 
       {/* Artist */}
       <section id="artist" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-16">
-        <span className="pointer-events-none absolute bottom-4 left-0 font-display text-[9rem] leading-none font-bold tracking-tight text-accent select-none sm:text-[12rem]">
-          KRYPTONIX
-        </span>
-
         <div className="relative grid gap-12 lg:grid-cols-[0.9fr_1fr]">
           {/* Left rail + portrait */}
           <div className="flex gap-6">
@@ -640,7 +636,7 @@ function Index() {
                   loading="lazy"
                   className="w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
-                <div className="absolute top-6 left-6 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-amber-600/60 bg-black/60 text-center backdrop-blur transition-transform duration-500 group-hover:scale-110">
+                <div className="absolute top-6 left-6 z-10 flex h-24 w-24 flex-col items-center justify-center rounded-full border border-amber-600/60 bg-black/60 text-center backdrop-blur transition-transform duration-500 group-hover:scale-110">
                   <span className="font-display text-2xl font-bold text-amber-500">
                     15+
                   </span>
@@ -650,29 +646,6 @@ function Index() {
                     Of Craft
                   </span>
                 </div>
-              </div>
-
-              <div className="mt-8 grid grid-cols-2 divide-border sm:grid-cols-4 sm:divide-x">
-                {[
-                  ["15+", "Years", "Of Craft"],
-                  ["1000+", "Custom", "Tattoos"],
-                  ["1", "Artist", "No Handoffs"],
-                  ["100%", "Focus On", "You"],
-                ].map(([value, l1, l2]) => (
-                  <div
-                    key={value}
-                    className="group px-3 py-2 text-center transition-transform duration-300 hover:-translate-y-1"
-                  >
-                    <p className="font-display text-2xl font-semibold transition-colors group-hover:text-amber-700">
-                      {value}
-                    </p>
-                    <p className="mt-1 text-[0.6rem] tracking-[0.18em] text-muted-foreground uppercase">
-                      {l1}
-                      <br />
-                      {l2}
-                    </p>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -778,7 +751,7 @@ function Index() {
       </section>
 
       {/* Reviews */}
-      <section className="mx-auto max-w-7xl px-5 pb-16">
+      <section id="reviews" className="mx-auto max-w-7xl px-5 pb-16">
         <SectionHeading eyebrow="Client Love" title="What Our Clients Say" />
         <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
           <div className="marquee-track gap-5">
@@ -805,6 +778,21 @@ function Index() {
       </section>
 
       {/* CTA */}
+      <section id="faq" className="mx-auto max-w-7xl px-5 pb-16">
+        <SectionHeading eyebrow="Good To Know" title="Frequently Asked Questions" />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          {faqs.map(([q, a]) => (
+            <div
+              key={q}
+              className="rounded-sm border border-border bg-card p-6 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-soft)]"
+            >
+              <p className="font-display text-sm font-semibold">{q}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section id="book" className="mx-auto max-w-7xl px-5 pb-16">
         <div className="grid overflow-hidden rounded-sm border border-border bg-card shadow-[var(--shadow-soft)] lg:grid-cols-[0.35fr_1fr]">
           <img
