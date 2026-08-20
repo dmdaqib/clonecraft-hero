@@ -330,22 +330,9 @@ function Index() {
               alt="Black and grey realism statue tattoo on an upper arm"
               width={1024}
               height={1536}
-              className="relative mx-auto max-h-[600px] w-full rounded-sm object-cover"
+              className="blend-image relative mx-auto max-h-[600px] w-full object-cover"
             />
           </div>
-        </div>
-
-        <div className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 flex-col items-center gap-6 border-l border-border pl-4 lg:flex">
-          {[
-            { icon: Instagram, label: "Instagram" },
-            { icon: MessageCircle, label: "WhatsApp" },
-            { icon: Phone, label: "Call Us" },
-          ].map(({ icon: Icon, label }) => (
-            <div key={label} className="text-center">
-              <Icon className="mx-auto h-5 w-5" strokeWidth={1.4} />
-              <p className="mt-1 text-[0.6rem] text-muted-foreground">{label}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -380,7 +367,7 @@ function Index() {
           {styles.map(({ img, name, text }) => (
             <article
               key={name}
-              className="group overflow-hidden rounded-sm border border-border bg-card shadow-[var(--shadow-card)]"
+              className="group media-hover rounded-sm border border-border bg-card shadow-[var(--shadow-card)]"
             >
               <img
                 src={img}
@@ -388,15 +375,16 @@ function Index() {
                 width={640}
                 height={768}
                 loading="lazy"
-                className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="h-44 w-full object-cover"
               />
-              <div className="px-3 py-4 text-center">
+              <div className="relative px-3 py-4 text-center">
                 <h3 className="font-display text-xs font-semibold tracking-[0.12em] uppercase">
                   {name}
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                   {text}
                 </p>
+                <span className="mx-auto mt-3 block h-px w-0 bg-primary transition-all duration-500 group-hover:w-10" />
               </div>
             </article>
           ))}
@@ -430,16 +418,23 @@ function Index() {
           ))}
         </div>
         <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-          {visibleGallery.map(({ img, alt }) => (
-            <img
-              key={alt}
-              src={img}
-              alt={alt}
-              width={640}
-              height={768}
-              loading="lazy"
-              className="h-56 w-full rounded-sm object-cover transition-transform duration-500 hover:scale-[1.03]"
-            />
+          {visibleGallery.map(({ img, alt, tag }) => (
+            <figure key={alt} className="group media-hover rounded-sm">
+              <img
+                src={img}
+                alt={alt}
+                width={640}
+                height={768}
+                loading="lazy"
+                className="h-56 w-full object-cover"
+              />
+              <figcaption className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/85 via-primary/20 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <span className="font-display text-[0.6rem] tracking-[0.16em] text-primary-foreground uppercase">
+                  {tag}
+                </span>
+                <span className="mt-1 text-xs text-primary-foreground/80">{alt}</span>
+              </figcaption>
+            </figure>
           ))}
         </div>
         <div className="mt-8 text-center">
